@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NativeModules, Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { I18n, Scope } from 'i18n-js';
 import ko from './language/ko.json';
 import en from './language/en.json';
@@ -17,12 +18,27 @@ const deviceLanguage: string =
     Platform.OS === 'ios'
         ? NativeModules.SettingsManager.settings.AppleLocale || NativeModules.SettingsManager.settings.AppleLanguages[0]
         : NativeModules.I18nManager.localeIdentifier;
+const LOCALE_KEY = 'locale';
 
 export const useTranslation = () => {
-    const [locale, setLocale] = useState('ko');
+    const [locale, _setLocale] = useState('ko');
+
+    const setLocale = (localeValue: string) => {
+        _setLocale(localeValue);
+        AsyncStorage.setItem(LOCALE_KEY, localeValue);
+    };
+
+    const init = async () => {
+        const fs = await AsyncStorage.getItem(LOCALE_KEY);
+        if (fs !== null) {
+            _setLocale(fs);
+        } else {
+            _setLocale(deviceLanguage.substring(0, 2));
+        }
+    };
 
     useEffect(() => {
-        setLocale(deviceLanguage.substring(0, 2));
+        init();
     }, []);
 
     return {
