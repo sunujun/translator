@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 import Button from './src/Button';
 import { useCookie } from './src/useCookie';
 import { useTranslation } from './src/useTranslation';
 
+/**
+ * 스플래시 스크린의 아이콘 출처: https://kor.pngtree.com/freepng/fresh-made-crispy-fortune-cookie_6323404.html
+ * 스플래시 스크린 만들기 가이드: https://docs.expo.dev/guides/splash-screens/
+ * 스플래시 스크린 피그마 템플릿: https://www.figma.com/community/file/1155362909441341285
+ * 아이콘 및 이미지 생성: https://easyappicon.com/
+ */
+
 function App(): JSX.Element {
     const { t, locale, setLocale } = useTranslation();
     const { cookieKey } = useCookie();
+
+    useEffect(() => {
+        setTimeout(() => {
+            SplashScreen.hide();
+        }, 1000);
+    }, []);
 
     if (locale === null) {
         return <></>;
