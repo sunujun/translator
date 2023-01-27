@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar, StyleSheet, Text, View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import Button from './src/Button';
@@ -15,16 +15,19 @@ import { useTranslation } from './src/useTranslation';
 function App(): JSX.Element {
     const { t, locale, setLocale } = useTranslation();
     const { cookieKey } = useCookie();
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        setTimeout(() => {
-            SplashScreen.hide();
-        }, 1000);
-    }, []);
+        if (locale !== '' && cookieKey !== '') {
+            setIsLoaded(true);
+        }
+    }, [cookieKey, locale]);
 
-    if (locale === null) {
-        return <></>;
-    }
+    useEffect(() => {
+        if (isLoaded) {
+            SplashScreen.hide();
+        }
+    }, [isLoaded]);
 
     return (
         <View style={styles.container}>

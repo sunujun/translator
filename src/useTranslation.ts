@@ -14,6 +14,8 @@ const i18n = new I18n({
     zh,
 });
 
+i18n.enableFallback = true;
+i18n.defaultLocale = 'ko';
 const deviceLanguage: string =
     Platform.OS === 'ios'
         ? NativeModules.SettingsManager.settings.AppleLocale || NativeModules.SettingsManager.settings.AppleLanguages[0]
@@ -21,7 +23,7 @@ const deviceLanguage: string =
 const LOCALE_KEY = 'locale';
 
 export const useTranslation = () => {
-    const [locale, _setLocale] = useState('ko');
+    const [locale, _setLocale] = useState('');
 
     const setLocale = (localeValue: string) => {
         _setLocale(localeValue);
@@ -38,7 +40,9 @@ export const useTranslation = () => {
     };
 
     useEffect(() => {
-        init();
+        setTimeout(() => {
+            init();
+        }, 3000);
     }, []);
 
     return {
