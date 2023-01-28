@@ -89,12 +89,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     todayText: {
+        fontFamily: 'Maplestory Light',
         position: 'absolute',
         top: 70,
         fontSize: 13,
         color: '#8b658f',
     },
     cookieText: {
+        fontFamily: 'Maplestory Bold',
         fontSize: 22,
         color: '#372538',
         textAlign: 'center',
