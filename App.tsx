@@ -25,6 +25,8 @@ function App(): JSX.Element {
     const date = new Date().getDate();
     const todayText = format(t('today_is'), year, month, date);
 
+    const locales = ['ko', 'en', 'ja', 'zh', 'es'];
+
     useEffect(() => {
         if (cookieKey !== '') {
             setIsLoaded(true);
@@ -61,10 +63,14 @@ function App(): JSX.Element {
                     </View>
                     <View style={styles.bottomContainer}>
                         <View style={styles.buttonsContainer}>
-                            <Button onPress={() => setLocale('ko')} isSelected={locale === 'ko'} text="KO" />
-                            <Button onPress={() => setLocale('en')} isSelected={locale === 'en'} text="EN" />
-                            <Button onPress={() => setLocale('ja')} isSelected={locale === 'ja'} text="JA" />
-                            <Button onPress={() => setLocale('zh')} isSelected={locale === 'zh'} text="ZH" />
+                            {locales.map(item => (
+                                <Button
+                                    key={item}
+                                    onPress={() => setLocale(item)}
+                                    isSelected={locale === item}
+                                    text={item.toUpperCase()}
+                                />
+                            ))}
                         </View>
                     </View>
                 </SafeAreaView>

@@ -7,12 +7,14 @@ import ko from './language/ko.json';
 import en from './language/en.json';
 import ja from './language/ja.json';
 import zh from './language/zh.json';
+import es from './language/es.json';
 
 const i18n = new I18n({
     ko,
     en,
     ja,
     zh,
+    es,
 });
 
 i18n.enableFallback = true;
