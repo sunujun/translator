@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StatusBar, StyleSheet, Text, View } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import Button from './src/Button';
+import Loading from './src/Loading';
 import { useCookie } from './src/useCookie';
 import { useTranslation } from './src/useTranslation';
 
@@ -18,16 +19,19 @@ function App(): JSX.Element {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        if (locale !== '' && cookieKey !== '') {
+        if (cookieKey !== '') {
             setIsLoaded(true);
         }
-    }, [cookieKey, locale]);
-
+    }, [cookieKey]);
     useEffect(() => {
-        if (isLoaded) {
+        if (locale !== null) {
             SplashScreen.hide();
         }
-    }, [isLoaded]);
+    }, [locale]);
+
+    if (!isLoaded) {
+        return <Loading />;
+    }
 
     return (
         <View style={styles.container}>

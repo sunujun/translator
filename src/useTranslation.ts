@@ -40,9 +40,7 @@ export const useTranslation = () => {
     };
 
     useEffect(() => {
-        setTimeout(() => {
-            init();
-        }, 3000);
+        init();
     }, []);
 
     return {
