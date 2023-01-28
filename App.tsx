@@ -14,15 +14,21 @@ import { useTranslation } from './src/useTranslation';
  */
 
 function App(): JSX.Element {
-    const { t, locale, setLocale } = useTranslation();
+    const { t, locale, setLocale, format } = useTranslation();
     const { cookieKey } = useCookie();
     const [isLoaded, setIsLoaded] = useState(false);
+
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth() + 1;
+    const date = new Date().getDate();
+    const todayText = format(t('today_is'), year, month, date);
 
     useEffect(() => {
         if (cookieKey !== '') {
             setIsLoaded(true);
         }
     }, [cookieKey]);
+
     useEffect(() => {
         if (locale !== null) {
             SplashScreen.hide();
@@ -36,6 +42,7 @@ function App(): JSX.Element {
     return (
         <View style={styles.container}>
             <StatusBar translucent={true} backgroundColor="transparent" barStyle="dark-content" />
+            <Text>{todayText}</Text>
             <Text>{t(cookieKey)}</Text>
             <View style={styles.buttonsContainer}>
                 <Button onPress={() => setLocale('ko')} isSelected={locale === 'ko'} text="KO" />
